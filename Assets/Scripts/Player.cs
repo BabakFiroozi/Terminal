@@ -3,13 +3,13 @@ using Fusion;
 
 public class Player : NetworkBehaviour
 {
-    private NetworkCharacterControllerPrototype _cc;
+    private NetworkTransform _tr;
 
     public static Player LocalPlayer;
 
     private void Awake()
     {
-        _cc = GetComponent<NetworkCharacterControllerPrototype>();
+        _tr = GetComponent<NetworkTransform>();
     }
 
     public override void FixedUpdateNetwork()
@@ -17,7 +17,7 @@ public class Player : NetworkBehaviour
         if (GetInput(out NetworkInputData data))
         {
             data.direction.Normalize();
-            _cc.Move(5 * data.direction * Runner.DeltaTime);
+            _tr.Transform.Translate(5 * data.direction * Runner.DeltaTime);
         }
     }
 
