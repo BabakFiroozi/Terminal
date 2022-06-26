@@ -7,6 +7,8 @@ public class Player : NetworkBehaviour
 
     public static Player LocalPlayer;
 
+    [SerializeField] private MeshRenderer _ren;
+
     private void Awake()
     {
         _tr = GetComponent<NetworkTransform>();
@@ -24,5 +26,15 @@ public class Player : NetworkBehaviour
     public override void Spawned()
     {
         base.Spawned();
+
+        if (Object.HasInputAuthority)
+        {
+            LocalPlayer = this;
+            _ren.material.color = Color.green;
+        }
+        else
+        {
+            _ren.material.color = Color.red;
+        }
     }
 }
